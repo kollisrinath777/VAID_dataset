@@ -1,20 +1,8 @@
-# --------------------------------------------------------
-# Fast R-CNN
-# Copyright (c) 2015 Microsoft
-# Licensed under The MIT License [see LICENSE for details]
-# Written by Sergey Karayev
-# --------------------------------------------------------
-
-cimport cython
 import numpy as np
-cimport numpy as np
 
 DTYPE = np.float
-ctypedef np.float_t DTYPE_t
 
-def bbox_overlaps(
-        np.ndarray[DTYPE_t, ndim=2] boxes,
-        np.ndarray[DTYPE_t, ndim=2] query_boxes):
+def bbox_overlaps(boxes, query_boxes):
     """
     Parameters
     ----------
@@ -24,12 +12,9 @@ def bbox_overlaps(
     -------
     overlaps: (N, K) ndarray of overlap between boxes and query_boxes
     """
-    cdef unsigned int N = boxes.shape[0]
-    cdef unsigned int K = query_boxes.shape[0]
-    cdef np.ndarray[DTYPE_t, ndim=2] overlaps = np.zeros((N, K), dtype=DTYPE)
-    cdef DTYPE_t iw, ih, box_area
-    cdef DTYPE_t ua
-    cdef unsigned int k, n
+    N = boxes.shape[0]
+    K = query_boxes.shape[0]
+    overlaps = np.zeros((N, K), dtype=DTYPE)
     for k in range(K):
         box_area = (
             (query_boxes[k, 2] - query_boxes[k, 0] + 1) *
@@ -53,4 +38,3 @@ def bbox_overlaps(
                     )
                     overlaps[n, k] = iw * ih / ua
     return overlaps
-
