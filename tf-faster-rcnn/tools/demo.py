@@ -152,4 +152,4 @@ if __name__ == '__main__':
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         print('Demo for {}'.format(im_name))
         demo(sess, net, im_name)
-        plt.savefig("/content/"+im_name+".png"
+        plt.savefig("/content/"+im_name+".png")
