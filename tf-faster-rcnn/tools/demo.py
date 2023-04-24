@@ -26,7 +26,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os, cv2
 import argparse
-
 from nets.vgg16 import vgg16
 from nets.resnet_v1 import resnetv1
 
@@ -37,7 +36,7 @@ CLASSES = ('__background__',
 #NETS = {'vgg16': ('vgg16_faster_rcnn_iter_70000.ckpt',),'res101': ('res101_faster_rcnn_iter_110000.ckpt',)}
 #DATASETS= {'pascal_voc': ('voc_2007_trainval',),'pascal_voc_0712': ('voc_2007_trainval+voc_2012_trainval',)}
 
-NETS = {'vgg16': ('vgg16_faster_rcnn_iter_70000.ckpt',),'res101': ('res101_faster_rcnn_iter_10000.ckpt',)}
+NETS = {'vgg16': ('vgg16_faster_rcnn_iter_70000.ckpt',),'res101': ('res101_faster_rcnn_iter_70000.ckpt',)}
 DATASETS= {'pascal_voc': ('voc_2007_trainval',),'pascal_voc_0712': ('voc_2007_trainval+voc_2012_trainval',)}
 
 def vis_detections(im, class_name, dets, thresh=0.5):
@@ -72,11 +71,13 @@ def vis_detections(im, class_name, dets, thresh=0.5):
     plt.tight_layout()
     plt.draw()
 
+
+
 def demo(sess, net, image_name):
     """Detect object classes in an image using pre-computed object proposals."""
 
     # Load the demo image
-    im_file = os.path.join(cfg.DATA_DIR, 'demo', image_name)
+    im_file = os.path.join("/content/drive/MyDrive/Mini_project/VAID_dataset/JPEGImages",image_name)
     im = cv2.imread(im_file)
 
     # Detect all object classes and regress object bounds
@@ -117,7 +118,7 @@ if __name__ == '__main__':
     # model path
     demonet = args.demo_net
     dataset = args.dataset
-    tfmodel = os.path.join('output', demonet, DATASETS[dataset][0], 'default',
+    tfmodel = os.path.join('/content/drive/MyDrive/Mini_project/for_download/faster rcnn/output', demonet, DATASETS[dataset][0], 'default',
                               NETS[demonet][0])
 
 
@@ -145,11 +146,10 @@ if __name__ == '__main__':
 
     print('Loaded network {:s}'.format(tfmodel))
 
-    im_names = ['000456.jpg', '000542.jpg', '001150.jpg',
+    im_names = ['000149.jpg', '000542.jpg', '001150.jpg',
                 '001763.jpg', '004545.jpg']
     for im_name in im_names:
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-        print('Demo for data/demo/{}'.format(im_name))
+        print('Demo for {}'.format(im_name))
         demo(sess, net, im_name)
-
-    plt.show()
+        plt.savefig("/content/"+im_name+".png"
